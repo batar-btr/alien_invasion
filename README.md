@@ -19,10 +19,16 @@ The goal is to shoot down the entire alien fleet before they reach the bottom!
 
 ## 🛠️ Tech Stack
 
-- **Python 3.14+**
+- **Python 3.12**
 - **Pygame** library
 
 ---
+
+## ☝☝ Notes ☝☝
+
+- #### This project is locked to **Python 3.12** because Pygame may not yet support newer versions.
+
+- If you encounter issues with Pygame, make sure you are using Python 3.12 and a fresh virtual environment.
 
 ## 📦 Installation
 
@@ -45,6 +51,10 @@ The goal is to shoot down the entire alien fleet before they reach the bottom!
    ```bash
    python alien_invasion.py
    ```
+
+## Inside project folder
+
+`py -3.12 -m venv .venv` # create venv with Python 3.12 if you already have it
 
 ---
 
