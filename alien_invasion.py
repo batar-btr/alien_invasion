@@ -40,15 +40,15 @@ class AlienInvasion:
             for bullet in self.bullets.copy():
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
-            print(len(self.bullets))
 
             self._update_screen()
             self.clock.tick(60)
 
     def _fire_bullet(self):
         """Create a new bullet and add to group bullets"""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:  # limit bullet count
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
     def _check_events(self):
         """Listen keybord and mouse events"""
