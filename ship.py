@@ -9,11 +9,11 @@ class Ship:
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
-        self.image = pygame.image.load('images/custom_ship_vol2.png')
+        self.image = pygame.image.load('images/custom_ship2.png')
         self.rect = self.image.get_rect()
 
         self.rect.midbottom = self.screen_rect.midbottom
-        self.rect.y = self.screen.get_height() - 58
+        # self.rect.y = self.screen.get_height() - 125
         self.x = float(self.rect.x)
 
         # Ship moving flags - start from not moving
