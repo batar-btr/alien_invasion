@@ -1,8 +1,11 @@
 import sys
+from time import sleep
+
 
 import pygame
 
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -18,6 +21,8 @@ class AlienInvasion:
         self.settings = Settings()
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))  # surface
+
+        self.stats = GameStats(self)  # Instantiate Stats
 
         # =========================FullScreen============================
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -44,6 +49,23 @@ class AlienInvasion:
             self._update_screen()
             self.clock.tick(60)
 
+    def _ship_hit(self):
+        """Handle the collision between the sheep and an alien"""
+
+        # Decrease ships count ( lives )
+        self.stats.ship_left -= 1
+
+        # Delete groups - aliens and bullets
+        self.aliens.empty()
+        self.bullets.empty()
+
+        # Create new fleet and put it to the center
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # Pause
+        sleep(0.5)
+
     def _fire_bullet(self):
         """Create a new bullet and add to group bullets"""
         if len(self.bullets) < self.settings.bullets_allowed:  # limit bullet count
@@ -60,9 +82,9 @@ class AlienInvasion:
         self._check_bullet_alien_collisions()
 
     def _check_bullet_alien_collisions(self):
-        # KILL DETECTION
+        # Kill detection
         collision = pygame.sprite.groupcollide(
-            self.bullets, self.aliens, False, True)
+            self.bullets, self.aliens, True, True)
 
         if not self.aliens:
             self.bullets.empty()
@@ -75,7 +97,7 @@ class AlienInvasion:
 
         # Alien - Ship collision detection
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            print("Ship hit!!!")
+            self._ship_hit()
 
     def _check_events(self):
         """Listen keybord and mouse events"""
