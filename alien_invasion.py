@@ -124,8 +124,9 @@ class AlienInvasion:
         """Update image and new screen"""
         self.screen.fill(self.settings.bg_color)
 
-        for bullet in self.bullets.sprites():
-            bullet.draw_bullet()
+        # for bullet in self.bullets.sprites():
+        #     bullet.draw_bullet()
+        self.bullets.draw(self.screen)
 
         self.ship.blitme()
         self.aliens.draw(self.screen)

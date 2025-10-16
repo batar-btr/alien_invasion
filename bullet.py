@@ -16,9 +16,14 @@ class Bullet(Sprite):
         self.settings = ai_game.settings
         self.color = ai_game.settings.bullet_color
 
+        self.image = pygame.image.load("images/bullet.png")
+        self.image = pygame.transform.scale_by(self.image, 3)
+        self.rect = self.image.get_rect()
+
         # Creating a bullet at (0,0) position and set correct position
-        self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
-                                self.settings.bullet_height)
+        # self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
+        #                         self.settings.bullet_height)
+
         self.rect.midtop = ai_game.ship.rect.midtop
 
         # The bullet position is stored in float format
@@ -31,6 +36,6 @@ class Bullet(Sprite):
         # Update rect position
         self.rect.y = self.y
 
-    def draw_bullet(self):
-        """Draw bullet on screen"""
-        pygame.draw.rect(self.screen, self.color, self.rect)
+    # def draw_bullet(self):
+    #     """Draw bullet on screen"""
+    #     pygame.draw.rect(self.screen, self.color, self.rect)
