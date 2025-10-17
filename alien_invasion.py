@@ -6,6 +6,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -39,7 +40,10 @@ class AlienInvasion:
 
         self._create_fleet()
 
-        self.game_active = True
+        self.game_active = False
+
+        # Creating Play button
+        self.play_button = Button(self, "Play")
 
     def run_game(self):
         """Run main game loop"""
@@ -118,16 +122,6 @@ class AlienInvasion:
         # Alien - Floor collision detection
         self._check_aliens_bottom()
 
-    def _check_events(self):
-        """Listen keybord and mouse events"""
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                self._check_keydown_events(event)
-            elif event.type == pygame.KEYUP:
-                self._check_keyup_events(event)
-
     def _create_alien(self, x_position, y_position):
         """Create an alien and put it in a row"""
         new_alien = Alien(self)
@@ -175,8 +169,31 @@ class AlienInvasion:
 
         self.ship.blitme()
         self.aliens.draw(self.screen)
+
+        # Play button displays if game isn't active
+        if not self.game_active:
+            self.play_button.draw_button()
+
         # Show last drawed screen
         pygame.display.flip()
+
+    def _check_events(self):
+        """Listen keybord and mouse events"""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
+
+    def _check_play_button(self, mouse_pos):
+        """Launch a new game when play button is pressed"""
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.game_active = True
 
     def _check_keydown_events(self, event):
         """Reacts to keydown"""
