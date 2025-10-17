@@ -90,6 +90,13 @@ class AlienInvasion:
             self.bullets.empty()
             self._create_fleet()
 
+    def _check_aliens_bottom(self):
+        """Detect alien-floor collision"""
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= self.settings.screen_height:
+                self._ship_hit()
+                break
+
     def _update_aliens(self):
         """Update all aliens' positions"""
         self._check_fleet_edges()
@@ -98,6 +105,9 @@ class AlienInvasion:
         # Alien - Ship collision detection
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
+
+        # Alien - Floor collision detection
+        self._check_aliens_bottom()
 
     def _check_events(self):
         """Listen keybord and mouse events"""
