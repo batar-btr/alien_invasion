@@ -78,6 +78,8 @@ class AlienInvasion:
             sleep(0.5)
         else:
             self.game_active = False
+            # Show mouse cursor
+            pygame.mouse.set_visible(True)
 
     def _fire_bullet(self):
         """Create a new bullet and add to group bullets"""
@@ -202,6 +204,9 @@ class AlienInvasion:
 
             self._create_fleet()
             self.ship.center_ship()
+
+            # Hide mouse cursor
+            pygame.mouse.set_visible(False)
 
     def _check_keydown_events(self, event):
         """Reacts to keydown"""
