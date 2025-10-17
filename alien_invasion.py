@@ -39,32 +39,41 @@ class AlienInvasion:
 
         self._create_fleet()
 
+        self.game_active = True
+
     def run_game(self):
         """Run main game loop"""
         while True:
             self._check_events()
-            self.ship.update()
-            self._update_bullets()
-            self._update_aliens()
+
+            if self.game_active:
+                self.ship.update()
+                self._update_bullets()
+                self._update_aliens()
+
             self._update_screen()
             self.clock.tick(60)
 
     def _ship_hit(self):
         """Handle the collision between the sheep and an alien"""
 
-        # Decrease ships count ( lives )
-        self.stats.ship_left -= 1
+        if self.stats.ship_left > 0:
 
-        # Delete groups - aliens and bullets
-        self.aliens.empty()
-        self.bullets.empty()
+            # Decrease ships count ( lives )
+            self.stats.ship_left -= 1
 
-        # Create new fleet and put it to the center
-        self._create_fleet()
-        self.ship.center_ship()
+            # Delete groups - aliens and bullets
+            self.aliens.empty()
+            self.bullets.empty()
 
-        # Pause
-        sleep(0.5)
+            # Create new fleet and put it to the center
+            self._create_fleet()
+            self.ship.center_ship()
+
+            # Pause
+            sleep(0.5)
+        else:
+            self.game_active = False
 
     def _fire_bullet(self):
         """Create a new bullet and add to group bullets"""
