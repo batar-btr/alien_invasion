@@ -1,5 +1,7 @@
 # 👾 Alien Invasion
 
+![Gameplay](images/screenshot.png)
+
 A **Python** learning project inspired by _Python Crash Course (3rd Edition)_ by **Eric Matthes**.  
 In this game, the player controls a spaceship that moves left and right across the bottom of the screen while shooting bullets at descending aliens.  
 The goal is to shoot down the entire alien fleet before they reach the bottom!
@@ -13,7 +15,7 @@ The goal is to shoot down the entire alien fleet before they reach the bottom!
 - 👾 Waves of aliens descending in formation
 - 🧠 Basic game logic with **collision detection**
 - 🔊 Optional sound effects and visual improvements
-- 🪶 Built with **Pygame**
+- 🛠️ Built with **Pygame**
 
 ---
 
@@ -79,8 +81,8 @@ The goal is to shoot down the entire alien fleet before they reach the bottom!
 
 ## 🌌 Future Ideas
 
-- Add a **scoreboard** and **high scores**
-- Add **levels** with increasing difficulty
+- Add a **scoreboard** and **high scores** ✅
+- Add **levels** with increasing difficulty ✅
 - Add **explosions**, **animations**, and **sound**
 - Implement **menus** and **pausing**
 

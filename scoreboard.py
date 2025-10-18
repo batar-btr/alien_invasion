@@ -1,5 +1,6 @@
 import pygame.font
-
+from pygame.sprite import Group
+from ship import Ship
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -11,6 +12,7 @@ class ScoreBoard:
 
     def __init__(self, ai_game: "AlienInvasion"):
         """Initialize score-tracking attributes"""
+        self.ai_game = ai_game
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
         self.settings = ai_game.settings
@@ -24,6 +26,7 @@ class ScoreBoard:
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
+        self.prep_ships()
 
     def prep_score(self):
         """Transform current score to graphic image"""
@@ -61,6 +64,16 @@ class ScoreBoard:
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
 
+    def prep_ships(self):
+        """The number of remaining ships"""
+        self.ships = Group()
+        for ship_number in range(self.stats.ship_left):
+            ship = Ship(self.ai_game)
+            ship.image = pygame.transform.scale_by(ship.image, 0.6)
+            ship.rect.x = 20 + ship_number * ship.rect.width
+            ship.rect.y = 20
+            self.ships.add(ship)
+
     def check_high_score(self):
         """Check ia a new high-score has been set"""
         if self.stats.score > self.stats.high_score:
@@ -72,3 +85,4 @@ class ScoreBoard:
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
+        self.ships.draw(self.screen)
