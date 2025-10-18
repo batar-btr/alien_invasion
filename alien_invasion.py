@@ -1,7 +1,5 @@
 import sys
 from time import sleep
-
-
 import pygame
 
 from settings import Settings
@@ -21,7 +19,6 @@ class AlienInvasion:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
-
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))  # surface
         pygame.display.set_caption("Alien Invasion")
@@ -34,16 +31,15 @@ class AlienInvasion:
         self.stats = GameStats(self)  # Instantiate Stats
         self.sb = ScoreBoard(self)  # Instantiate ScoreBoard
         self.ship = Ship(self)
+        self.play_button = Button(self, "Play")
+
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+
         self.bg_color = self.settings.bg_color
-
-        self._create_fleet()
-
         self.game_active = False
 
-        # Creating Play button
-        self.play_button = Button(self, "Play")
+        self._create_fleet()
 
     def run_game(self):
         """Run main game loop"""
@@ -60,12 +56,13 @@ class AlienInvasion:
 
     def _ship_hit(self):
         """Handle the collision between the sheep and an alien"""
-        print(self.stats.ship_left)
 
         if self.stats.ship_left > 1:
 
             # Decrease ships count ( lives )
             self.stats.ship_left -= 1
+            self.sb.prep_ships()
+
             # Delete groups - aliens and bullets
             self.aliens.empty()
             self.bullets.empty()
@@ -176,13 +173,10 @@ class AlienInvasion:
         """Update image and new screen"""
         self.screen.fill(self.settings.bg_color)
 
-        # for bullet in self.bullets.sprites():
-        #     bullet.draw_bullet()
         self.bullets.draw(self.screen)
-
-        self.ship.blitme()
         self.aliens.draw(self.screen)
 
+        self.ship.blitme()
         self.sb.show_score()
 
         # Play button displays if game isn't active
@@ -213,6 +207,7 @@ class AlienInvasion:
             self.stats.reset_stats()
             self.sb.prep_score()
             self.sb.prep_level()
+            self.sb.prep_ships()
             self.game_active = True
 
             self.bullets.empty()
