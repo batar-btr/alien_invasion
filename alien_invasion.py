@@ -6,6 +6,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import ScoreBoard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -20,19 +21,18 @@ class AlienInvasion:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
+
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))  # surface
-
-        self.stats = GameStats(self)  # Instantiate Stats
-
+        pygame.display.set_caption("Alien Invasion")
         # =========================FullScreen============================
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         # self.settings.screen_width = self.screen.get_rect().width
         # self.settings.screen_height = self.screen.get_rect().height
         # ===============================================================
 
-        pygame.display.set_caption("Alien Invasion")
-
+        self.stats = GameStats(self)  # Instantiate Stats
+        self.sb = ScoreBoard(self)  # Instantiate ScoreBoard
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
@@ -172,6 +172,8 @@ class AlienInvasion:
 
         self.ship.blitme()
         self.aliens.draw(self.screen)
+
+        self.sb.show_score()
 
         # Play button displays if game isn't active
         if not self.game_active:
