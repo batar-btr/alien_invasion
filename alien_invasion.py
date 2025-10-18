@@ -60,12 +60,12 @@ class AlienInvasion:
 
     def _ship_hit(self):
         """Handle the collision between the sheep and an alien"""
+        print(self.stats.ship_left)
 
-        if self.stats.ship_left > 0:
+        if self.stats.ship_left > 1:
 
             # Decrease ships count ( lives )
             self.stats.ship_left -= 1
-
             # Delete groups - aliens and bullets
             self.aliens.empty()
             self.bullets.empty()
