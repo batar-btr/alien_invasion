@@ -112,6 +112,10 @@ class AlienInvasion:
             self._create_fleet()
             self.settings.increase_speed()
 
+            # Increase Game Level
+            self.stats.level += 1
+            self.sb.prep_level()
+
     def _check_aliens_bottom(self):
         """Detect alien-floor collision"""
         for alien in self.aliens.sprites():
@@ -208,6 +212,7 @@ class AlienInvasion:
             self.settings.initialize_dynamic_settings()
             self.stats.reset_stats()
             self.sb.prep_score()
+            self.sb.prep_level()
             self.game_active = True
 
             self.bullets.empty()
