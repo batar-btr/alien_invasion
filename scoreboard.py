@@ -17,8 +17,9 @@ class ScoreBoard:
         self.stats = ai_game.stats
 
         # Font settings for displaying the score
-        self.text_color = (30, 30, 30)
-        self.font = pygame.font.Font("./fonts/PixelifySans-Regular.ttf", 48)
+        self.text_color = (200, 200, 200)
+        # self.font = pygame.font.Font("./fonts/PixelifySans-Regular.ttf", 48)
+        self.font = pygame.font.SysFont("Monospace", 50)
 
         self.prep_score()
 
