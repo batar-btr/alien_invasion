@@ -9,6 +9,7 @@ from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from sounds import Sounds
 
 
 class AlienInvasion:
@@ -17,6 +18,7 @@ class AlienInvasion:
     def __init__(self):
         """Init game and create game resources"""
         pygame.init()
+        pygame.mixer.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.screen = pygame.display.set_mode(
@@ -32,6 +34,7 @@ class AlienInvasion:
         self.sb = ScoreBoard(self)  # Instantiate ScoreBoard
         self.ship = Ship(self)
         self.play_button = Button(self, "Play")
+        self.sounds = Sounds()
 
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
@@ -58,7 +61,7 @@ class AlienInvasion:
         """Handle the collision between the sheep and an alien"""
 
         if self.stats.ship_left > 1:
-
+            self.sounds.hurt()
             # Decrease ships count ( lives )
             self.stats.ship_left -= 1
             self.sb.prep_ships()
@@ -83,6 +86,7 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullets_allowed:  # limit bullet count
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+            self.sounds.shoot()
 
     def _update_bullets(self):
         """Update bullet positions and remove bullets on top of the screen"""
@@ -99,6 +103,7 @@ class AlienInvasion:
             self.bullets, self.aliens, True, True)
 
         if collision:
+            self.sounds.hit()
             for aliens in collision.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
@@ -112,6 +117,7 @@ class AlienInvasion:
             # Increase Game Level
             self.stats.level += 1
             self.sb.prep_level()
+            self.sounds.level_up()
 
     def _check_aliens_bottom(self):
         """Detect alien-floor collision"""
